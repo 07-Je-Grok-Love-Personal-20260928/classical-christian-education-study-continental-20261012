@@ -214,10 +214,22 @@ QUIZ=[("古典教育本身就是基督教的吗？","不是。古典回答“怎
 def quiz():
     return '<div class="quiz">'+"".join(f'<details class="q reveal"><summary><span class="qn">Q{i+1}</span> {q}</summary><p>✅ {a}</p></details>' for i,(q,a) in enumerate(QUIZ))+'</div>'
 
+def filter_bar():
+    g="".join(f'<button type="button" class="lf" data-fg="{k}">{v[0]}</button>' for k,v in G.items())
+    t="".join(f'<button type="button" class="lf" data-ft="{k}">{v[0]}</button>' for k,v in T.items())
+    a="".join(f'<button type="button" class="lf" data-fa="{k}">{v}</button>' for k,v in AUD.items())
+    return ('<div class="lib-filter" id="lib-filter" role="search" aria-label="书库筛选">'
+     '<div class="lf-row"><input type="search" id="lib-search" class="lib-search" placeholder="🔍 搜索书名 / 作者 / 原名…" aria-label="搜索书库" autocomplete="off" />'
+     '<div class="view-tog" role="group" aria-label="视图"><button type="button" class="vt on" data-v="card">▦ 卡片</button><button type="button" class="vt" data-v="list">☰ 列表</button></div></div>'
+     f'<div class="lf-row"><span class="lf-label">组别</span><button type="button" class="lf on" data-fg="all">全部</button>{g}</div>'
+     f'<div class="lf-row"><span class="lf-label">传统</span><button type="button" class="lf on" data-ft="all">全部</button>{t}</div>'
+     f'<div class="lf-row"><span class="lf-label">中译</span><button type="button" class="lf on" data-fz="all">全部</button><button type="button" class="lf" data-fz="yes">🀄 已有中译</button><button type="button" class="lf" data-fz="no">暂无中译</button>'
+     f'<span class="lf-label">读者</span><button type="button" class="lf on" data-fa="all">全部</button>{a}</div></div>')
+
 LIB=f'''
 <section>
 <h2 id="sec-library">十二、书库：基督教古典教育核心书目</h2>
-<p class="lead">这是<span class="mark-core">精选核心书目</span>，不是穷尽全部。共 <b class="counter" data-to="{N}">{N}</b> 本，每本书都显示 <b>📑 目录</b>：<b class="counter" data-to="{NV}">{NV}</b> 本为核对过的完整章节目录，其余为按公认卷册或部分划分的“结构目录”，不编造章名。<b class="counter" data-to="{NZH}">{NZH}</b> 本已有核实的中文版（标 🀄，含译者、出版方、年份）。</p>
+<p class="lead">这是<span class="mark-core">广泛的核心书目</span>（不可能真正穷尽“全部”），每本书的作者、年份与存在都经网上检索核实，查不到的一律删去。共 <b class="counter" data-to="{N}">{N}</b> 本，每本书都显示 <b>📑 目录</b>：<b class="counter" data-to="{NV}">{NV}</b> 本为核对过的完整章节目录，其余为按公认卷册或部分划分的“结构目录”，不编造章名。目录以树状展开：来源中的真实标题用编号（1 / 1.1 / 1.1.1）显示，本站整理的内容用虚线框标“要点概括”，两者分开。<b class="counter" data-to="{NZH}">{NZH}</b> 本已有核实的中文版（标 🀄，含译者、出版方、年份）。</p>
 <div class="stat-row">
  <div class="stat"><b class="counter" data-to="{N}">{N}</b><span>本书</span></div>
  <div class="stat"><b class="counter" data-to="5">5</b><span>组别</span></div>
@@ -225,14 +237,7 @@ LIB=f'''
  <div class="stat"><b class="counter" data-to="{NZH}">{NZH}</b><span>已有中译</span></div>
  <div class="stat"><b class="counter" data-to="2400">2400</b><span>年跨度（约）</span></div>
 </div>
-<div class="lib-filter" role="toolbar" aria-label="书库筛选">
- <span class="lf-label">组别</span>
- <button type="button" class="lf on" data-fg="all">全部</button>''' + "".join(f'<button type="button" class="lf" data-fg="{k}">{v[0]}</button>' for k,v in G.items()) + '''
- <span class="lf-label">中译</span>
- <button type="button" class="lf on" data-fz="all">全部</button><button type="button" class="lf" data-fz="yes">🀄 已有中译</button><button type="button" class="lf" data-fz="no">暂无中译</button>
- <span class="lf-label">读者</span>
- <button type="button" class="lf on" data-fa="all">全部</button>''' + "".join(f'<button type="button" class="lf" data-fa="{k}">{v}</button>' for k,v in AUD.items()) + f'''
-</div>
+{filter_bar()}
 <h3 id="sec-shelf">书架视图</h3>
 {shelf()}
 <h3 id="sec-charts">中译与组别图表</h3>
@@ -240,6 +245,7 @@ LIB=f'''
 <h3 id="sec-cards">书卡（含目录）</h3>
 <p class="lib-count" id="lib-count" aria-live="polite"></p>
 <div class="book-grid" id="book-grid">{book_cards()}</div>
+<div class="more-wrap"><button type="button" class="btn-more" id="lib-more">加载更多</button></div>
 
 <h3 id="sec-zhlist">中文书单（已有中译本）</h3>
 <p>只列查到译者、出版方、年份的中文版。奥古斯丁《论教师》目前只有网络译文，未计入。《训练有素的心智》只查到版权代理的拟译名，未见出版，按“暂无中译”处理。</p>

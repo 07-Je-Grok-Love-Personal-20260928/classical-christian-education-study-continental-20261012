@@ -162,7 +162,8 @@ def concept_map():
 
 def zh_list():
     rows="".join(f'<tr><td>{ZH[b["zh"]][0]}</td><td>{b["au"].split(" ")[0]}</td><td>{ZH[b["zh"]][1]}</td><td>{ZH[b["zh"]][2]}</td><td>{ZH[b["zh"]][3]}</td><td>{ZH[b["zh"]][4] or "—"}</td></tr>' for b in sorted(B,key=lambda x:x["y"]) if b["zh"] in ZH)
-    return f'<div class="table-wrap"><table><thead><tr><th>中文版</th><th>作者</th><th>译者</th><th>出版方</th><th>年份</th><th>备注</th></tr></thead><tbody>{rows}</tbody></table></div>'
+    return f'<div class="table-wrap"><table class="zhl"><thead><tr><th>中文版</th><th>作者</th><th>译者</th><th>出版方</th><th>年份</th><th>备注</th></tr></thead><tbody>{rows}</tbody></table></div>'
 
 def zh_flips():
     return '<div class="flip-deck">'+"".join(f'<button type="button" class="flip" aria-label="翻转卡片"><span class="flip-in"><span class="flip-f">🀄 {ZH[b["zh"]][0]}<br><small>作者？原名？</small></span><span class="flip-b">{b["au"]}<br><i>{b["orig"]}</i><br>{ZH[b["zh"]][1]}</span></span></button>' for b in sorted(B,key=lambda x:x["y"]) if b["zh"] in ZH)+'</div>'
+exec(open('library_v5.py',encoding='utf-8').read())

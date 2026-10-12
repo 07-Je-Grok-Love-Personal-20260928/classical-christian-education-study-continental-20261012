@@ -2799,3 +2799,50 @@ details.fold.ql-card summary {
 .cm-ideas span{font-size:.82rem;padding:3px 9px;border-radius:999px;background:color-mix(in srgb,var(--c) 18%,transparent);border:1px solid color-mix(in srgb,var(--c) 45%,transparent)}
 @media (max-width:520px){.cm-row{grid-template-columns:1fr}.cm-arrow{display:none}}
 @media (prefers-reduced-motion:reduce){.donut,.sc-bar span,.spine{transition:none}}
+/* ===== v20261012-5 ===== */
+.lib-filter{position:sticky;top:calc(var(--header-h,56px) + 4px);z-index:20;flex-direction:column;align-items:stretch;gap:6px;max-height:46vh;overflow:auto}
+.lf-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.lib-search{flex:1 1 200px;min-width:0;padding:8px 12px;border-radius:999px;border:1px solid rgba(212,175,55,.4);background:rgba(8,16,30,.8);color:#f3ead2;font-size:16px}
+.view-tog{display:flex;gap:4px}.vt{border:1px solid rgba(255,255,255,.15);background:transparent;color:#dfe6f0;border-radius:8px;padding:6px 10px;cursor:pointer}.vt.on{background:rgba(212,175,55,.25);border-color:#d4af37}
+@media (max-width:700px){.lib-filter{position:static;max-height:none}}
+.trad{font-size:.72rem;padding:1px 8px;border-radius:999px;border:1px solid var(--tc);color:var(--tc);background:rgba(0,0,0,.25);white-space:nowrap}
+.book-core{font-size:.92rem;line-height:1.65;margin:.4rem 0}
+.book{font-size:1rem;line-height:1.6}
+.book-grid.list{grid-template-columns:1fr}
+.book-grid.list .book{padding:10px 14px}
+.book-grid.list .toc-panel,.book-grid.list .book-more,.book-grid.list .mem,.book-grid.list .book-core,.book-grid.list .zh-ed{display:none}
+.book-grid.list .book-cover{margin:-10px -14px 6px}
+.more-wrap{text-align:center;margin:1rem 0}
+.btn-more{padding:10px 22px;border-radius:999px;border:1px solid #d4af37;background:rgba(212,175,55,.15);color:#f3e3b0;cursor:pointer;font-size:1rem}
+.btn-more[hidden]{display:none}
+.tree-ctrl{display:flex;gap:6px;padding:0 10px 6px}
+.tc-btn{font-size:.75rem;border:1px solid rgba(255,255,255,.2);background:transparent;color:#cfd8e3;border-radius:6px;padding:3px 8px;cursor:pointer}
+.toc-list{display:none}
+.tree,.tree ul{list-style:none;margin:0;padding:0}
+.tree{padding:0 8px 10px 6px;max-height:420px;overflow:auto}
+.tree ul{margin-left:.9em;padding-left:.6em;border-left:1px dashed rgba(255,255,255,.14)}
+.tn{margin:2px 0}
+.tn summary{cursor:pointer;list-style:none;display:flex;gap:6px;align-items:baseline;padding:3px 4px;border-radius:6px}
+.tn summary::-webkit-details-marker{display:none}
+.tn summary::before{content:"▸";color:#d4af37;flex:0 0 auto;transition:transform .15s}
+.tn details[open]>summary::before{transform:rotate(90deg)}
+.tn summary:hover{background:rgba(255,255,255,.05)}
+.tn-leaf{display:flex;gap:6px;align-items:baseline;padding:3px 4px 3px 18px}
+.tn-num{flex:0 0 auto;font-size:.72rem;font-weight:700;padding:0 5px;border-radius:5px;color:#0b1626;background:var(--lc,#d4af37)}
+.tn-t{min-width:0;overflow-wrap:anywhere;font-size:.88rem;line-height:1.5}
+.l1{--lc:#d4af37}.l1>details>summary .tn-t,.l1>.tn-leaf .tn-t{font-weight:700;color:#f3ead2}
+.l2{--lc:#6ba3e0}.l3{--lc:#5ec4c0}.l4{--lc:#b39ddb}
+.tn.pt>details>summary,.tn.pt>.tn-leaf{border:1px dashed rgba(168,223,196,.35);background:rgba(61,154,106,.07);margin:2px 0}
+.tn.pt .tn-t{color:#cfe9db;font-style:italic;font-weight:400!important}
+.kp{flex:0 0 auto;font-size:.62rem;padding:0 5px;border-radius:4px;background:rgba(61,154,106,.3);color:#a8dfc4;white-space:nowrap}
+.content-inner{max-width:min(1200px,100%)}
+.main p,.main li{line-height:1.75}
+.toc-panel summary::after{content:none}
+.toc-panel>summary::after{content:"▾";margin-left:auto;transition:transform .2s}
+.toc-panel:not([open])>summary::after{transform:rotate(-90deg)}
+.lib-filter{position:static;max-height:none;overflow:visible}
+.zhl td:nth-child(5),#book-table td:first-child{white-space:nowrap}
+.tree .tn>details>summary{display:flex!important;flex-wrap:nowrap!important;align-items:flex-start}
+.tree .tn-leaf{flex-wrap:nowrap;align-items:flex-start}
+.tree .tn-t{flex:1 1 0;min-width:0}
+.tree .tn-num,.tree .kp{margin-top:.2em}
