@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+.env
+.env.*
+.netrc
+.surge-env
+CNAME
+.netlify
+_build/

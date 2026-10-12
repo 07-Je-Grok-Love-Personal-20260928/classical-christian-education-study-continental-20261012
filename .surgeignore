@@ -1,0 +1,9 @@
+.git
+.netlify
+.netrc
+.env
+.env.*
+node_modules
+CNAME
+build.py
+README.md

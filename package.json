@@ -1,0 +1,1 @@
+{"name":"classical-christian-education-study-continental-20261012","version":"1.0.0","private":true,"description":"欧陆改革宗基督教古典教育研读","scripts":{"build":"python3 build.py","start":"npx --yes serve -l 3456 ."},"homepage":"https://classical-christian-education-study-continental-20261012.surge.sh/"}
