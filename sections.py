@@ -218,3 +218,29 @@ BODY+=_sec("sec-library","六、书库：基督教古典教育核心书目",_S["
 BODY+=_sec("sec-practice","七、实践应用",_sub("sec-curriculum","分学段课程设计")+_sub("sec-methods","教学方法")+_sub("sec-apply","谁做什么：家庭 · 教会 · 学校")+_sub("sec-hard","难点与警示"))
 BODY+=_sec("sec-memory","八、记忆与自测",'<h3 id="sec-mpath">记忆路径</h3>'+_S["sec-memory"][1]+'<h3 id="sec-tq">三艺四艺翻卡测验（动画）</h3>'+TQ+_sub("sec-flip","记忆翻卡")+_sub("sec-onepage","一页总结")+'<h3 id="sec-stc">《自由教育传统》自测揭示卡</h3><p>先想，再点开。</p>'+STCH+_sub("sec-quiz","全站自测"))
 
+
+# ===== 层级编号：L1 一、二…；L2 = n.k（目录与标题同源，自动一致）=====
+_CN="一二三四五六七八九十"
+def _num(html):
+    out=[];parts=_re.split(r'(<h2 id="[^"]+">)',html)
+    n=0;out.append(parts[0])
+    for i in range(1,len(parts),2):
+        n+=1;k=[0]
+        def f(m):
+            k[0]+=1;return f'{m.group(1)}<span class="hn">{n}.{k[0]}</span> '
+        out.append(parts[i]+_re.sub(r'(<h3 id="[^"]+">)',f,parts[i+1]))
+    return "".join(out)
+# 七艺轮（动画可视化）
+_W=[("文法","#3d9a6a"),("辩证","#6ba3e0"),("修辞","#c45c5c"),("算术","#e8a85c"),("几何","#d4af37"),("音乐","#b39ddb"),("天文","#5ec4c0")]
+import math as _m
+def _wheel():
+    g=[]
+    for i,(t,c) in enumerate(_W):
+        a=-90+i*360/7;x=150+105*_m.cos(_m.radians(a));y=150+105*_m.sin(_m.radians(a))
+        g.append(f'<g class="wh-n" style="--i:{i}"><line x1="150" y1="150" x2="{x:.0f}" y2="{y:.0f}" stroke="{c}" stroke-width="2"/><circle cx="{x:.0f}" cy="{y:.0f}" r="30" fill="#0e1a2c" stroke="{c}" stroke-width="3"/><text x="{x:.0f}" y="{y+5:.0f}" fill="#f3ead2" font-size="15" text-anchor="middle">{t}</text></g>')
+    return ('<figure class="wheel reveal"><svg viewBox="0 0 300 300" role="img" aria-label="七艺轮：三艺文法、辩证、修辞；四艺算术、几何、音乐、天文，围绕中心的智慧">'
+      '<circle cx="150" cy="150" r="105" fill="none" stroke="rgba(212,175,55,.25)" stroke-dasharray="4 6"/>'+"".join(g)+
+      '<circle cx="150" cy="150" r="38" fill="#3b2f1e" stroke="#d4af37"/><text x="150" y="146" fill="#f0d878" font-size="15" text-anchor="middle">智慧</text><text x="150" y="164" fill="#f0d878" font-size="11" text-anchor="middle">理智德性</text></svg>'
+      '<figcaption>三艺（绿蓝红）管语言，四艺（橙金紫青）管数；七条辐都通向中心，那就是智慧。按 S1 的说法，七艺只培养理智德性，所以中心之外还要有敬虔与神学。</figcaption></figure>')
+BODY=BODY.replace('<h3 id="sec-quadrivium">','<h3 id="sec-wheel">七艺轮（动画）</h3>'+_wheel()+'<h3 id="sec-quadrivium">',1)
+BODY=_num(BODY)

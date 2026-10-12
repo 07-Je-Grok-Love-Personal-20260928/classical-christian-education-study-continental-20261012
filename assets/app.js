@@ -23,8 +23,15 @@
     const el = document.getElementById(id);
     if (!el) return;
     const hh = document.querySelector(".site-header");
-    const y = el.getBoundingClientRect().top + window.pageYOffset - ((hh ? hh.getBoundingClientRect().height : 0) + 10);
-    window.scrollTo({ top: Math.max(0, y), behavior: scrollBehavior() });
+    const off = () => (hh ? hh.getBoundingClientRect().height : 0) + 10;
+    const tgt = () => Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - off());
+    const far = Math.abs(tgt() - window.pageYOffset) > window.innerHeight * 2;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo({ top: tgt(), behavior: far ? "auto" : scrollBehavior() });
+    [300, 700, 1300].forEach((t) => setTimeout(() => {
+      if (Math.abs(el.getBoundingClientRect().top - off()) > 30) window.scrollTo({ top: tgt(), behavior: "auto" });
+      if (t === 1300) document.documentElement.style.scrollBehavior = "";
+    }, t));
     history.replaceState(null, "", "#" + id);
     if (!MQ_DESKTOP.matches) closeSidebar();
   }
