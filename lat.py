@@ -12,6 +12,7 @@ SRC={
 "S5":"2013初版目录与扉页（docslib.org 公开样本）",
 "S6":"Classical Academic Press 产品页（修订版增补说明、第三版精装信息）",
 "S7":"作者简介：Eastern University、Gordon College、Ecclesial Schools、Alcuin Fellowship 官方页",
+"S8":"第三版样章所载完整目录、插图目录（Figure 1–11）与第五部分“教学法原则”首篇 pp.261–265（与 S1 同一文件）",
 "P":"用户提供的中英对照本照片（封面脚注、目录两页、Lockridge 2013 树图）",
 }
 def src(*k): return '<p class="lt-src">📚 来源：'+"；".join(f'<b>{x}</b>' for x in k)+'</p>'
@@ -86,7 +87,7 @@ def toc_html():
     return '<ol class="lt-toc">'+"".join(rows)+'</ol>'
 
 # ---------- 2. 树（原创 SVG） ----------
-TREE_SVG='''<figure class="lt-fig"><svg viewBox="0 -30 600 670" role="img" aria-label="PGMAPT 知识之树：根为敬虔，主干为体育与音乐、三艺与四艺、自然与道德哲学，上为形而上学，冠为神学，果子为善真美、智慧、信望爱、德性、恩典">
+TREE_SVG='''<figure class="lt-fig lt-grow" id="lt-grow"><svg viewBox="0 -30 600 670" role="img" aria-label="PGMAPT 知识之树：根为敬虔，主干为体育与音乐、三艺与四艺、自然与道德哲学，上为形而上学，冠为神学，果子为善真美、智慧、信望爱、德性、恩典">
 <defs><linearGradient id="ltg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0d878"/><stop offset="1" stop-color="#9c7a22"/></linearGradient>
 <radialGradient id="ltc" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#2f6b55" stop-opacity=".55"/><stop offset="1" stop-color="#14304a" stop-opacity=".15"/></radialGradient></defs>
 <path d="M60 600 Q300 560 540 600" stroke="#5b6f8a" stroke-width="2" fill="none"/>
@@ -139,7 +140,7 @@ def ch(t, core, why, terms, srcs, apply, s, more=""):
 {s}</div></details>'''
 
 PARTS=[]
-PARTS.append(("lat-p0","范式：全书五论点预览（原书 pp.1–14）",[
+PARTS.append(("lat-p0","开篇范式：全书五论点预览（对照本 pp.1–14）",[
 ch("① 敬虔为基，神学统辖",
  "传统教育与现代教育最根本的分别在于：古人认为教育本质上是<b>塑造所爱</b>。所爱是否正确，要看它是否合乎实在的结构。所以敬虔（对神与人当有的爱与敬畏）是起点，神学是冠冕；神学是“仆人女王”，从内部滋养各学科，而不是从外部闯入。",
  "要回应现代教育“价值中立”的假设：作者认为教育从来就是传递某种文化。他们以 paideia（弗6:4“主的教训”）说明：教育是把教会的整个文化传给下一代。",
@@ -341,7 +342,7 @@ ch("呼召、文化与课程",
  "学校：把“毕业”理解为进入教会成年服事，而非终点（参下方改革宗评估“约中儿童”）。",
  src("S6（三节说明）","S2（引书 p.230）","S1 pp.9–10","S3（引书 pp.255–256）")),
 ]))
-PARTS.append(("lat-p5","附录一至七（中译本）",[
+PARTS.append(("lat-p5","附录：附录一至七＋第三版第五部分",[
 ch("附录一 现代性与基督教的古典转向 · 附录四 自由技艺与哲学总括 · 附录五 科学哲学补充",
  "这三篇沿自初版（初版为附录一、三、四）。附录一对照现代性与基督教古典选择；附录四是七艺与哲学的总表（书评称其为“七艺详表”，最便速查）；附录五补充自然科学哲学。",
  "给读者一套速查工具。",
@@ -364,6 +365,37 @@ ch("附录六 古典语言与古典的语言性自由技艺 · 附录七 一种�
  "家庭：从小学高年级开始拉丁文；学校：理科按“自然史→自然哲学”两段设计。",
  src("S6","S1 目录")),
 ]))
+
+# ---------- v10 增补（据 S8 已核实；推断处标注） ----------
+ARGMAP='<div class="flow lt-arg">'+'<span class="arr">→</span>'.join(f'<div class="step"><b>{a}</b><br><small>{b}</small></div>' for a,b in [
+("诊断","现代教育＝技能＋价值中立，丢了“塑造所爱”"),("根","敬虔：对神与人当有的爱与敬畏"),("养","体育＋音乐：身体与心灵的诗性养成"),
+("器","七艺：3 语言＋4 数学，种子与工具"),("果","三哲：自然·道德·神圣，求整全智慧"),("冠","神学：在教会中留心于道，统辖一切"),("出口","呼召·文化·课程：主的 paideia 之环")])+'</div>'
+ED3=table(["部分","第三版章节（S8 页码）","中英对照本（P 页码）"],[
+["范式","The Paradigm of the Liberal Arts Tradition 1","1–14"],
+["Part I","Piety: Proper Loves, Proper Fears 15；Gymnastic and Music 24（Gymnastic 28 / Musical 32）","16–40"],
+["Part II","Seven Liberal Arts 39；Trivium 44（Grammar 47 / Dialectic 55 / Rhetoric 60）；Quadrivium 66（Arithmetic 69 / Geometry 74 / Astronomy 81 / Music 88）","41–114"],
+["Part III","Philosophy 103；Natural Philosophy: A dialectic between natural history and natural science 107；Moral Philosophy 131（Virtue 134 / Community 161）；Divine Philosophy: Metaphysics 196","115–232"],
+["Part IV","The Word of God for the Life of the World：Theology: Attending to the Word within the Church 205；Calling, Culture, and Curriculum 210（Calling 214 / Culture 231 / Curriculum 243）","233–"],
+["Part V（第三版新增）","Principles of a Christian Classical Pedagogy 261；Reading with Memory and Imagination 269；A New Natural Philosophy 277；Classical Languages… 287；What Is the Narrative? Book Lists, Tradition, and Canon 291","对照本作附录二、六、七（"+INF+"）"],
+["附录","I 书单（Norms and Nobility 7–12 年级课程、Ambrose School 书单、John Senior《千本好书》）303；II PGMAPT 范式表 332；III 七艺与哲学总括 333；IV 技术叙事示例 335；V 四份清单（课程委员会、行政讲话、家长会、成绩单）337–348","附录一至七"],
+])
+FIGS=('<details class="fold lt-ch"><summary>四艺各章实际做什么：插图目录所见（S8，已核实）</summary><div class="fold-body">'
+'<p>第三版插图目录让四艺各章的教法看得见，基本都是<b>学生亲手证明</b>，不是只练算法：</p>'
+'<ul><li><b>算术（p.71）</b>：三角形数与正方形数图，即毕达哥拉斯学派的“形数”，用点阵看见数的性质。</li>'
+'<li><b>几何（pp.78–81）</b>：离散的 (n+4)² 对照连续的 (a+b)²，出自欧几里得《几何原本》卷二命题4；附学生面积证明与“基本定理”证明。</li>'
+'<li><b>天文（pp.93–94）</b>：牛顿《原理》的“牛顿大炮”图，以及两份学生作的引力证明。</li>'
+'<li><b>自然哲学（p.130）</b>：学生推导光速、狭义相对论。这说明“自然哲学”并不是怀旧，而是带着原因去学现代物理。</li>'
+'<li><b>神学与呼召（p.257）</b>：图10“主的 paideia 之环”。</li><li><b>教学法（p.266）</b>：学生写的“发现式学习”短文。</li></ul>'
+'<p>'+INF+'：两位作者一位教修辞、一位教数学，数学章节的分量和学生作品多，与这种分工一致。</p>'+src("S8")+'</div></details>')
+PED=('<details class="fold lt-ch" open><summary>第五部分首篇：基督教古典教学法原则（第三版 pp.261–265，S8 已核实）</summary><div class="fold-body">'
+'<p><span class="mark-core">总原则 ad rem（“朝向实在”）</span> 亚里士多德说爱智始于惊奇。惊奇没有哪套方法能保证，作者给的是一条原则：把学生引向事物本身的善、真、美，包括自然、语言、数、历史、人的作品，最终是神自己和祂的作为。照这条原则做，第一个结果是课程得到恢复（好书、伟大书籍取代课本），下一步应当是教学法的恢复。</p>'
+'<p><b>语言：</b>学生最缺的不是分析能力，而是会“读”，让文本向他说话。早年用听写、抄写、背诵、朗读、复述，让学生直接接触语言；材料是真东西，先是儿歌、诗、童话，然后是好书，最后是伟大的书。年级高了再用苏格拉底式问答，目的是养成理智德性：既警醒，又谦卑。</p>'
+'<p><b>数学：</b>当作自由技艺来教，而不只是解题技巧：像学画、学琴一样，把理解和模仿练习结合起来。低年级在教室、田野、园子里度量、比较，跟着老师作图；年级高了重走历史上的伟大发现，自己猜想、求解、证明。</p>'
+'<p><b>“合法的边缘参与”（Lave & Wenger 1991）：</b>作者用感恩节家宴作比方。孩子吃的是同一桌真菜（合法），但分量和座位按年龄安排（边缘），日后自己能办这场宴席（参与）。备课的三个问题：①这项模仿练习有没有把学生引向善、真、美？②学生的参与是不是“边缘而合法”？③日后他能不能自己与实在相连？</p>'
+'<p><b>两句格言：</b><i>festina lente</i>（慢慢地快）：有紧迫感，但不慌乱；<i>non multa sed multum</i>（不在多而在深）：丰富，但不过量。作者也用这一点回应所谓“21世纪技能”的论调。</p>'
+'<p><span class="mark-apply">改革宗读法</span> “朝向实在”放在比利时信条第2条下来读：受造界是一本书，教学就是带孩子读神的作为。“边缘参与”和约中儿童在教会里的位置相合：孩子已在约中，按年龄参与敬拜与教理。</p>'+src("S8 pp.261–265")+'</div></details>')
+PARTS[2][2].append(FIGS)
+PARTS[5][2].insert(0,PED)
 
 def parts_html():
     o=[]
@@ -445,15 +477,18 @@ def lat():
     srcl="".join(f"<li><b>{k}</b>：{v}</li>" for k,v in SRC.items())
     return f'''
 <section class="lt" id="sec-lat-wrap">
-<h2 id="sec-lat">★ 专题深读：《自由教育传统》（克拉克与杰恩）</h2>
+<h2 id="sec-lat">专题深读：《自由教育传统》（克拉克与杰恩）</h2>
 <p class="lead">这本书是基督教古典复兴的“第三本书”：塞耶斯与威尔逊恢复了三艺，Littlejohn 与 Evans 加上四艺与德性，克拉克与杰恩把七艺放回一个更大的范式——<b>敬虔、体育、音乐、七艺、哲学、神学（PGMAPT）</b>。</p>
 <p class="mem">🎯 全书一句话（意译，S1 p.2）：七艺从来不是要独立构成全部课程，它们专为培养理智德性；人不只是理智，所以课程必须培养的不只是理智德性。</p>
 <div class="lt-legend"><span><span class="lt-blur">[模糊]</span> 照片无法辨认，不猜</span><span><span class="lt-inf">推断</span> 本站据标题或书评推断</span><span>📚 每章标来源；引文均为意译，页码依所引资料的版本</span></div>
 <p class="lt-back"><a href="#bk-the-liberal-arts-tradition-a-philosophy-of-chris" title="《博雅传统》书卡">→ 到书库中的本书卡片</a></p>
 
-<h3 id="lat-facts">作者与出版事实（只列已核实）</h3>{FACTS}
+<h3 id="lat-facts">书籍概览</h3>
+<h4>全书论证一条线</h4>{ARGMAP}
+<h4>作者与出版事实（只列已核实）</h4>{FACTS}
+<details class="fold"><summary>第三版完整章节与页码（S8）</summary><div class="fold-body">{ED3}</div></details>
 
-<h3 id="lat-toc">中英对照本目录（照片逐字转录）</h3>
+<h3 id="lat-toc">完整目录（中英对照本，照片逐字转录）</h3>
 <p>依用户照片转录。左页靠书脊处英文被遮，方括号为据出版社目录补足；页码依虚线走向判读。原书排印错误（Libreal、Philiosopy、Geek）照录。</p>
 {toc_html()}
 <details class="fold"><summary>与出版社英文目录对照（初版 2013 / 第三版 2021）</summary><div class="fold-body">
@@ -467,7 +502,8 @@ def lat():
 ])}
 <p>结论（{INF}）：中英对照本的结构介于初版与第三版之间，附录一至七与出版社对 2019 修订版的描述（新增阅读附录与“新自然哲学”附录）一致，应译自 2019 修订版。</p></div></details>
 
-<h3 id="lat-tree">PGMAPT：知识之树与层级流程</h3>
+<h3 id="lat-tree">学问之树（PGMAPT）</h3>
+<p class="lt-hint">向下滚动，树会从根长到冠：敬虔 → 体育·音乐 → 七艺 → 哲学 → 神学 → 果子。</p>
 {TREE_SVG}
 <p>树是“一层依赖并扩展前一层”的有机图像（S1 p.2）；下面是同一范式的层级流程：</p>
 {layers_html()}
@@ -476,18 +512,18 @@ def lat():
 
 {parts_html()}
 
-<h3 id="lat-dist">关键区分</h3>{DIST}
+<h3 id="lat-dist">关键辨析</h3>{DIST}
 
 <h3 id="lat-ref">改革宗评估</h3>{REF}
 
-<h3 id="lat-mem">记忆与复习</h3>
+<h3 id="lat-mem">记忆与读书计划</h3>
 <p class="memo-line">口诀：<b>敬（P）身（G）乐（M），艺（A）哲（P）神（T）</b>——根在敬虔，干是身乐与七艺，枝是三哲，冠是神学。</p>
 {MEM}
 <p class="mem">🔢 数字钩：<b>1</b>根（敬虔）· <b>2</b>养（体育、音乐）· <b>3+4</b>艺（三艺四艺）· <b>3</b>哲（自然、道德、神圣）· <b>1</b>冠（神学）＝ 14 个节点。</p>
 <details class="fold"><summary>十周读书计划</summary><div class="fold-body">{PLAN}</div></details>
 <details class="fold"><summary>讨论题（8题）</summary><div class="fold-body"><ol>{"".join(f"<li>{q}</li>" for q in QS)}</ol></div></details>
 
-<h3 id="lat-src">资料来源</h3>
+<h4 id="lat-src">资料来源</h4>
 <ul class="lt-srcl">{srcl}</ul>
 <p class="lt-note2">版权说明：本节为摘要与评述，不转载原文；引文为一两句意译并注页码。各章细部论证凡未见原文者，均标“推断”。</p>
 </section>'''

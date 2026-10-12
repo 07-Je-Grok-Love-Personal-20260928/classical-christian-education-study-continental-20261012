@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """生成 index.html。改内容改这里，然后 python3 build.py。"""
-V = "cce20261012-9"
+V = "cce20261012-10"
 
 ERAS = [
  dict(id="era-hebrew", c="#3d9a6a", ico="📜", when="约前15–前5世纪（传统）", name="希伯来：家中的施玛", hook="敬畏耶和华是知识的开端——教育从家门口开始。",
@@ -240,7 +240,7 @@ HTML=f'''<!DOCTYPE html>
 
 <footer class="site-footer">
   <div class="footer-brand">欧陆改革宗 · 基督教古典教育研读</div>
-  <div class="footer-sub">v20261012-9</div>
+  <div class="footer-sub">v20261012-10</div>
   <p>讲解为原作。经文只标章节，信条只标条款号。约数年代已标“约”。地图为示意。</p>
   <p class="mb-0">Soli Deo Gloria.</p>
 </footer>

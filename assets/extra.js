@@ -38,3 +38,30 @@ document.querySelectorAll(".flip").forEach(function(f){f.addEventListener("click
 /* donut/bars animate */
 document.querySelectorAll(".donut,.sc-bar").forEach(function(e){if(RM||!("IntersectionObserver" in window)){e.classList.add("go");return}var o=new IntersectionObserver(function(es){if(es[0].isIntersecting){e.classList.add("go");o.disconnect()}});o.observe(e)});
 })();
+/* v20261012-10: PGMAPT tree grows with scroll; arts flip quiz counter; failsafes */
+(function(){"use strict";
+var RM=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+try{
+ var fig=document.getElementById("lt-grow");
+ if(fig&&!RM){var svg=fig.querySelector("svg"),parts=[];
+  [].forEach.call(svg.children,function(c){if(c.tagName.toLowerCase()==="defs")return;if(c.classList.contains("ltf")){[].forEach.call(c.children,function(k){parts.push(k)})}else parts.push(c)});
+  parts.forEach(function(p){var b;try{b=p.getBBox()}catch(e){b={y:0,height:0}}p.__y=b.y+b.height});
+  parts.sort(function(a,b){return b.__y-a.__y});
+  var N=parts.length,shown=0,done=false;
+  fig.classList.add("armed");
+  var btn=document.createElement("button");btn.type="button";btn.className="btn-text lt-replay";btn.textContent="↻ 重新生长";fig.appendChild(btn);
+  function show(k){k=Math.max(shown,Math.min(N,k));for(var i=shown;i<k;i++){parts[i].classList.add("gw");parts[i].style.transitionDelay=((i-shown)*40)+"ms"}shown=k;if(shown>=N)done=true}
+  function onS(){if(done)return;var r=fig.getBoundingClientRect(),vh=innerHeight;var p=(vh*0.9-r.top)/(r.height*0.75);show(Math.ceil(Math.max(0,Math.min(1,p))*N))}
+  addEventListener("scroll",onS,{passive:true});addEventListener("resize",onS);onS();
+  btn.addEventListener("click",function(){parts.forEach(function(p){p.classList.remove("gw");p.style.transitionDelay=""});shown=0;done=false;void svg.offsetWidth;var i=0;(function step(){show(++i);if(i<N)setTimeout(step,70)})()});
+  /* failsafe: if anything blocks scroll events, grow fully after 12s of being on screen */
+  setTimeout(function(){var r=fig.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)show(N)},12000);
+ }
+}catch(e){var f=document.getElementById("lt-grow");if(f)f.classList.remove("armed")}
+var deck=document.querySelector(".tq"),n=document.getElementById("tq-n"),rs=document.getElementById("tq-reset");
+if(deck){function upd(){var k=deck.querySelectorAll(".flip.on").length,t=deck.querySelectorAll(".flip").length;if(n)n.textContent="已翻 "+k+" / "+t+(k===t?" ✅ 全部记住了吗？":"")}
+ deck.addEventListener("click",function(){setTimeout(upd,0)});if(rs)rs.addEventListener("click",function(){deck.querySelectorAll(".flip.on").forEach(function(f){f.classList.remove("on")});upd()});}
+/* global failsafe: nothing stays invisible */
+setTimeout(function(){document.querySelectorAll(".rv:not(.in)").forEach(function(e){var r=e.getBoundingClientRect();if(r.top<innerHeight*1.5)e.classList.add("in")})},3000);
+window.addEventListener("error",function(){document.querySelectorAll(".rv").forEach(function(e){e.classList.add("in")})});
+})();

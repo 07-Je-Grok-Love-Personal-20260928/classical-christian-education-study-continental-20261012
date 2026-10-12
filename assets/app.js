@@ -18,25 +18,59 @@
     return reduceMotion ? "auto" : "smooth";
   }
 
-  /* —— Build TOC from headings —— */
+  /* —— Build grouped TOC: every h2 = collapsible L1, its h3 = L2 —— */
+  function tocGo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const hh = document.querySelector(".site-header");
+    const y = el.getBoundingClientRect().top + window.pageYOffset - ((hh ? hh.getBoundingClientRect().height : 0) + 10);
+    window.scrollTo({ top: Math.max(0, y), behavior: scrollBehavior() });
+    history.replaceState(null, "", "#" + id);
+    if (!MQ_DESKTOP.matches) closeSidebar();
+  }
+  function mkLink(h, cls) {
+    const a = document.createElement("a");
+    a.href = "#" + h.id;
+    a.textContent = h.textContent.replace(/\s+/g, " ").trim();
+    a.dataset.target = h.id;
+    a.className = cls;
+    a.addEventListener("click", (e) => { e.preventDefault(); tocGo(h.id); });
+    return a;
+  }
+  function setGroup(g, open) {
+    g.classList.toggle("open", open);
+    const b = g.querySelector(".toc-tg");
+    if (b) b.setAttribute("aria-expanded", String(open));
+  }
   function buildToc() {
     if (!tocNav || !main) return;
-    const headings = main.querySelectorAll("h2[id], h3[id]");
     const frag = document.createDocumentFragment();
-    headings.forEach((h) => {
-      const a = document.createElement("a");
-      a.href = "#" + h.id;
-      a.textContent = h.textContent.trim();
-      a.dataset.target = h.id;
-      if (h.tagName === "H3") a.classList.add("toc-h3");
-      a.addEventListener("click", (e) => {
-        e.preventDefault();
-        document.getElementById(h.id)?.scrollIntoView({ behavior: scrollBehavior() });
-        history.replaceState(null, "", "#" + h.id);
-        if (!MQ_DESKTOP.matches) closeSidebar();
-      });
-      frag.appendChild(a);
+    let grp = null, kids = null, n = 0;
+    main.querySelectorAll("h2[id], h3[id]").forEach((h) => {
+      if (h.tagName === "H2") {
+        n++;
+        grp = document.createElement("div");
+        grp.className = "toc-grp";
+        grp.dataset.target = h.id;
+        const row = document.createElement("div");
+        row.className = "toc-row";
+        row.appendChild(mkLink(h, "toc-h2"));
+        const tg = document.createElement("button");
+        tg.type = "button"; tg.className = "toc-tg"; tg.setAttribute("aria-label", "展开/收起子目录");
+        tg.setAttribute("aria-controls", "toc-k" + n); tg.setAttribute("aria-expanded", "false");
+        tg.innerHTML = '<span aria-hidden="true">▸</span>';
+        tg.addEventListener("click", (e) => { e.preventDefault(); setGroup(grp_ref, !grp_ref.classList.contains("open")); });
+        const grp_ref = grp;
+        row.appendChild(tg);
+        kids = document.createElement("div");
+        kids.className = "toc-kids"; kids.id = "toc-k" + n;
+        grp.appendChild(row); grp.appendChild(kids);
+        frag.appendChild(grp);
+      } else if (kids) {
+        kids.appendChild(mkLink(h, "toc-h3"));
+      }
     });
+    frag.querySelectorAll(".toc-grp").forEach((g) => { if (!g.querySelector(".toc-kids a")) g.classList.add("leaf"); });
     tocNav.appendChild(frag);
   }
 
@@ -148,14 +182,22 @@
   /* —— TOC search —— */
   tocSearch?.addEventListener("input", () => {
     const q = tocSearch.value.trim().toLowerCase();
-    tocNav?.querySelectorAll("a").forEach((a) => {
-      const show = !q || a.textContent.toLowerCase().includes(q);
-      a.style.display = show ? "" : "none";
+    tocNav?.querySelectorAll(".toc-grp").forEach((g) => {
+      const h2 = g.querySelector(".toc-h2");
+      const m2 = !q || h2.textContent.toLowerCase().includes(q);
+      let any = false;
+      g.querySelectorAll(".toc-h3").forEach((a) => {
+        const m = !q || m2 || a.textContent.toLowerCase().includes(q);
+        a.style.display = m ? "" : "none"; if (m && q) any = true;
+      });
+      g.style.display = (m2 || any) ? "" : "none";
+      if (q) setGroup(g, any); else setGroup(g, g.classList.contains("cur"));
     });
   });
 
   /* —— Scroll progress + active TOC + back-top —— */
   const headingEls = [];
+  let lastActive = null;
 
   function onScroll() {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -175,9 +217,24 @@
       else break;
     }
     const id = current?.id;
+    if (id === lastActive) return;
+    lastActive = id;
+    let curGrp = null;
     tocNav?.querySelectorAll("a").forEach((a) => {
-      a.classList.toggle("active", a.dataset.target === id);
+      const on = a.dataset.target === id;
+      a.classList.toggle("active", on);
+      if (on) { a.setAttribute("aria-current", "location"); curGrp = a.closest(".toc-grp"); } else a.removeAttribute("aria-current");
     });
+    tocNav?.querySelectorAll(".toc-grp").forEach((g) => {
+      const c = g === curGrp;
+      if (c && !g.classList.contains("cur")) setGroup(g, true);
+      g.classList.toggle("cur", c);
+    });
+    const act = tocNav?.querySelector("a.active");
+    if (act && sidebar?.classList.contains("open")) {
+      const r = act.getBoundingClientRect(), nr = tocNav.getBoundingClientRect();
+      if (r.top < nr.top || r.bottom > nr.bottom) tocNav.scrollTop += r.top - nr.top - nr.height / 3;
+    }
   }
 
   let ticking = false;
@@ -201,6 +258,7 @@
   /* —— Expand / collapse ALL folds —— */
   function setAllFolds(open) {
     document.querySelectorAll("details.fold").forEach((d) => { d.open = open; });
+    tocNav?.querySelectorAll(".toc-grp").forEach((g) => setGroup(g, open));
   }
   ["expand-all", "expand-all-hero"].forEach((id) => {
     document.getElementById(id)?.addEventListener("click", () => setAllFolds(true));

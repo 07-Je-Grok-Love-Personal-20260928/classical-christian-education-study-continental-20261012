@@ -176,4 +176,45 @@ S1 = f'''
 '''
 exec(open('library.py',encoding='utf-8').read())
 exec(open('lat.py',encoding='utf-8').read())
-BODY = S1 + LAT + LIB
+
+# ===== v20261012-10 全站重组：导论 → 根基 → 历史 → 三艺四艺 → 专题深读 → 书库 → 应用 → 记忆 =====
+import re as _re
+def _split(html):
+    d={}
+    for m in _re.finditer(r'<section[^>]*>\s*<h2 id="([^"]+)">(.*?)</h2>(.*?)</section>',html,_re.S):
+        d[m.group(1)]=(_re.sub(r'^[一二三四五六七八九十]+、','',m.group(2)).strip(),m.group(3))
+    return d
+_S=_split(S1+LIB)
+def _dem(body): return body.replace('<h3 ','<h4 ').replace('</h3>','</h4>')
+def _sub(i,title=None,demote=True):
+    t,b=_S[i]; return f'<h3 id="{i}">{title or t}</h3>'+(_dem(b) if demote else b)
+def _sec(i,title,inner,lead=""):
+    return f'<section class="part" id="{i}-wrap">\n<h2 id="{i}">{title}</h2>{lead}{inner}\n</section>\n'
+
+TLV='<ol class="tlv">'+"".join(f'<li class="tl-item reveal" style="--c:{e["c"]}"><span class="tlv-dot" aria-hidden="true">{e["ico"]}</span><div><span class="tlv-when">{e["when"]}</span><b>{e["name"]}</b><p>{e["core"]}</p><p class="tlv-mem">🧠 {e["mem"]}</p></div></li>' for e in ERAS)+'</ol>'
+ARTS=[("📝","文法","读懂：词与句的规则、栖居于语言","记"),("🧩","辩证（逻辑）","辨明：找论据、跟问题、给理由","辨"),("🎤","修辞","说动：以智慧与雄辩引人向真","说"),
+("🔢","算术","离散的数本身","数"),("📐","几何","静止的连续量：线与形","形"),("🎵","音乐","时间中的数：比例与和谐","声"),("🌌","天文","运动中的数：空间、时间、天体","天")]
+TQ=('<p class="tq-bar"><span id="tq-n">已翻 0 / 7</span><button type="button" class="btn-text" id="tq-reset">全部翻回</button></p><div class="flip-deck tq">'+
+ "".join(f'<button type="button" class="flip" aria-label="翻转卡片：{k}"><span class="flip-in"><span class="flip-f">❓ {"三艺" if i<3 else "四艺"} · 哪一艺？<br><small>{d}</small></span><span class="flip-b">{ic} {k}<br><small>口诀：{m}</small></span></span></button>' for i,(ic,k,d,m) in enumerate(ARTS))+'</div>'
+ '<p class="mem">🧠 三艺“记·辨·说”（语言）；四艺“数·形·声·天”（数学）：数本身 → 静止的量 → 时间中的数 → 运动中的数。</p>')
+STC=[("PGMAPT 六个字母各代表什么？","Piety 敬虔、Gymnastic 体育、Music 音乐、(Liberal) Arts 七艺、Philosophy 哲学、Theology 神学。"),
+("作者说七艺为什么不能构成全部课程？","七艺专门培养理智德性；人不只是理智，所以还需要敬虔、体育、音乐，并要上升到哲学和神学。"),
+("“音乐”在古代比今天宽在哪里？","指缪斯所掌的一切学问：诗、故事、历史、天文等，以诗性、前批判的方式学习。"),
+("三艺是年龄阶段吗？","在作者看来不是。阶段说是塞耶斯1947年的创见；三艺是同时使用、逐步加深的工具。"),
+("哲学的三分是什么？今天对应什么？","自然哲学（自然科学）、道德哲学（社会科学）、神圣哲学即形而上学。"),
+("第三版第五部分的总教学原则叫什么？","ad rem，朝向实在：把学生引向事物本身的善、真、美；另有 festina lente 与 non multa sed multum 两句格言。"),
+("本书哪一点改革宗读者要换“引擎”？","“恩典成全自然”换成恩典更新、恢复自然；德性植根于因信称义；圣经从摇篮起就居课程中心。"),
+("修订版和中国教会有什么关系？","作者致谢说，修订版“诞生于”与成都秋雨圣约教会的交流（S1 p.xxv）。")]
+STCH='<div class="stc-grid">'+"".join(f'<details class="stc reveal"><summary><span class="qn">{i+1}</span>{q}<span class="stc-tap">点开看答案</span></summary><p>✅ {a}</p></details>' for i,(q,a) in enumerate(STC))+'</div>'
+
+_d=_S["sec-def"][1]; _i=_d.index('<h3 id="sec-vs">')
+BODY=_sec("sec-intro","一、导论与定义",'<h3 id="sec-def">定义与本质</h3>'+_d[:_i]+_d[_i:])
+BODY+=_sec("sec-frame","二、圣经与神学根基",'<h3 id="sec-cfrc">创造—堕落—救赎—成全</h3>'+_dem(_S["sec-frame"][1])+_sub("sec-reformed","圣约、领域与信条"))
+BODY+=_sec("sec-history","三、历史脉络",'<h3 id="sec-tlv">滚动时间线（动画）</h3><p>往下滚，十个时代依次出现。每一条只记一件事，就是它的核心和记忆句。</p>'+TLV+_sub("sec-timeline","时代卡片（横向）")+"")
+_t=_S["sec-trivium"][1]
+BODY+=_sec("sec-arts","四、三艺与四艺",'<h3 id="sec-trivium">三艺深解：语法 · 逻辑 · 修辞</h3>'+_t+_sub("sec-stepper","三艺步进器（动画）"))
+BODY+=LAT.replace('<h2 id="sec-lat">专题深读','<h2 id="sec-lat">五、专题深读')
+BODY+=_sec("sec-library","六、书库：基督教古典教育核心书目",_S["sec-library"][1].replace('<h3 id="sec-readpath">','<h3 id="sec-books">分阶段经典书单</h3>'+_dem(_S["sec-books"][1])+'<h3 id="sec-readpath">'))
+BODY+=_sec("sec-practice","七、实践应用",_sub("sec-curriculum","分学段课程设计")+_sub("sec-methods","教学方法")+_sub("sec-apply","谁做什么：家庭 · 教会 · 学校")+_sub("sec-hard","难点与警示"))
+BODY+=_sec("sec-memory","八、记忆与自测",'<h3 id="sec-mpath">记忆路径</h3>'+_S["sec-memory"][1]+'<h3 id="sec-tq">三艺四艺翻卡测验（动画）</h3>'+TQ+_sub("sec-flip","记忆翻卡")+_sub("sec-onepage","一页总结")+'<h3 id="sec-stc">《自由教育传统》自测揭示卡</h3><p>先想，再点开。</p>'+STCH+_sub("sec-quiz","全站自测"))
+

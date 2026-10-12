@@ -8,3 +8,4 @@ CNAME
 .netlify
 _build/
 _shots/
+__pycache__/
