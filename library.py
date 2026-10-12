@@ -161,9 +161,10 @@ dict(g="movement",a="teacher leader",zh="博雅传统",zhn="译名",orig="The Li
  who="教师、领袖",st=4,mem="PGMAPT：敬虔先行，神学为冠。"),
 ]
 
-def stars(n): return "★"*n+"☆"*(5-n)
+exec(open('library_ext.py',encoding='utf-8').read())
+def _old_stars(n): return "★"*n+"☆"*(5-n)
 
-def book_cards():
+def _old_book_cards():
     out=[]
     for i,b in enumerate(sorted(B,key=lambda x:x["y"])):
         gname,gc=G[b["g"]]
@@ -183,15 +184,15 @@ def book_cards():
 </article>''')
     return "".join(out)
 
-def book_table():
+def _old_book_table():
     rows="".join(f'<tr><td data-v="{b["y"]}">{b["ys"]}</td><td>{b["au"]}</td><td>《{b["zh"]}》<br><small>{b["orig"]}</small></td><td>{G[b["g"]][0]}</td><td>{"✅" if b["tocv"] else "📝"}</td></tr>' for b in sorted(B,key=lambda x:x["y"]))
     return f'<div class="table-wrap"><table class="sortable" id="book-table"><thead><tr><th data-k="num">年份 ⇅</th><th>作者 ⇅</th><th>书名 ⇅</th><th>组别 ⇅</th><th>目录</th></tr></thead><tbody>{rows}</tbody></table></div>'
 
-def book_timeline():
+def _old_book_timeline():
     items="".join(f'<li class="tl-item reveal" style="--c:{G[b["g"]][1]}"><span class="tl-y">{b["ys"].split("（")[0]}</span><span class="tl-t">《{b["zh"]}》<small>{b["au"].split(" ")[0]}</small></span></li>' for b in sorted(B,key=lambda x:x["y"]))
     return f'<ol class="book-tl">{items}</ol>'
 
-N=len(B); NV=sum(b["tocv"] for b in B)
+
 
 FLIP=[("三艺是哪三门？","语法 · 逻辑 · 修辞"),("四艺是哪四门？","算术 · 几何 · 音乐 · 天文"),("箴1:7 说什么是知识的开端？","敬畏耶和华"),
 ("“掠夺埃及人”出自谁的哪本书？","奥古斯丁《论基督教教义》卷二"),("塞耶斯演讲哪一年？","1947年（1948年刊印）"),("路德致议员书哪一年？","1524年"),
@@ -216,22 +217,37 @@ def quiz():
 LIB=f'''
 <section>
 <h2 id="sec-library">十二、书库：基督教古典教育核心书目</h2>
-<p class="lead">这是<span class="mark-core">精选核心书目</span>，不是穷尽全部。共 <b class="counter" data-to="{N}">{N}</b> 本，其中 <b class="counter" data-to="{NV}">{NV}</b> 本的目录或结构已在出版社、图书馆目录或可靠书评上核对，其余标“目录概要（未逐章核对）”。中文名标“中译”者为已核实的现有中译名，标“译名”者为本站自译。</p>
+<p class="lead">这是<span class="mark-core">精选核心书目</span>，不是穷尽全部。共 <b class="counter" data-to="{N}">{N}</b> 本，每本书都显示 <b>📑 目录</b>：<b class="counter" data-to="{NV}">{NV}</b> 本为核对过的完整章节目录，其余为按公认卷册或部分划分的“结构目录”，不编造章名。<b class="counter" data-to="{NZH}">{NZH}</b> 本已有核实的中文版（标 🀄，含译者、出版方、年份）。</p>
 <div class="stat-row">
  <div class="stat"><b class="counter" data-to="{N}">{N}</b><span>本书</span></div>
  <div class="stat"><b class="counter" data-to="5">5</b><span>组别</span></div>
- <div class="stat"><b class="counter" data-to="{NV}">{NV}</b><span>目录已核对</span></div>
+ <div class="stat"><b class="counter" data-to="{NV}">{NV}</b><span>完整章节目录</span></div>
+ <div class="stat"><b class="counter" data-to="{NZH}">{NZH}</b><span>已有中译</span></div>
  <div class="stat"><b class="counter" data-to="2400">2400</b><span>年跨度（约）</span></div>
 </div>
 <div class="lib-filter" role="toolbar" aria-label="书库筛选">
  <span class="lf-label">组别</span>
  <button type="button" class="lf on" data-fg="all">全部</button>''' + "".join(f'<button type="button" class="lf" data-fg="{k}">{v[0]}</button>' for k,v in G.items()) + '''
+ <span class="lf-label">中译</span>
+ <button type="button" class="lf on" data-fz="all">全部</button><button type="button" class="lf" data-fz="yes">🀄 已有中译</button><button type="button" class="lf" data-fz="no">暂无中译</button>
  <span class="lf-label">读者</span>
  <button type="button" class="lf on" data-fa="all">全部</button>''' + "".join(f'<button type="button" class="lf" data-fa="{k}">{v}</button>' for k,v in AUD.items()) + f'''
 </div>
+<h3 id="sec-shelf">书架视图</h3>
+{shelf()}
+<h3 id="sec-charts">中译与组别图表</h3>
+{charts()}
+<h3 id="sec-cards">书卡（含目录）</h3>
 <p class="lib-count" id="lib-count" aria-live="polite"></p>
 <div class="book-grid" id="book-grid">{book_cards()}</div>
 
+<h3 id="sec-zhlist">中文书单（已有中译本）</h3>
+<p>只列查到译者、出版方、年份的中文版。奥古斯丁《论教师》目前只有网络译文，未计入。《训练有素的心智》只查到版权代理的拟译名，未见出版，按“暂无中译”处理。</p>
+{zh_list()}
+<h3 id="sec-zhflip">中译书名记忆卡</h3>
+{zh_flips()}
+<h3 id="sec-cmap">作者 → 思想 概念图</h3>
+{concept_map()}
 <h3 id="sec-booktl">书目时间轴（动画）</h3>
 {book_timeline()}
 
@@ -240,9 +256,9 @@ LIB=f'''
 
 <h3 id="sec-readpath">阅读路径</h3>
 <div class="flow">
-<div class="step">1️⃣ 塞耶斯《失落的学习工具》<br><small>一晚读完</small></div><span class="arr">→</span>
+<div class="step">1️⃣ 塞耶斯《失落的学艺》<br><small>一晚读完</small></div><span class="arr">→</span>
 <div class="step">2️⃣ 路易斯《人之废》<br><small>为什么要教“胸膛”</small></div><span class="arr">→</span>
-<div class="step">3️⃣ 威尔逊《重拾失落的学习工具》<br><small>运动起点（带着难点⑥读）</small></div><span class="arr">→</span>
+<div class="step">3️⃣ 威尔逊《重获失落的学艺》（有中译）<br><small>运动起点（带着难点⑥读）</small></div><span class="arr">→</span>
 <div class="step">4️⃣ 克拉克与杰恩《博雅传统》<br><small>完整范式</small></div><span class="arr">→</span>
 <div class="step">5️⃣ 奥古斯丁《论基督教教义》<br><small>使用异教学问的总原则</small></div>
 </div>
