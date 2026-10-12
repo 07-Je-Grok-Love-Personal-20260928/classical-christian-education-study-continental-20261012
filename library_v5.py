@@ -277,3 +277,4 @@ REAL2=[b["zh"] for b in B if real_depth(to_tree(b["zh"]))==2]
 DEEP3=[b["zh"] for b in B if depth(to_tree(b["zh"]))>=3]
 
 DEEP3=[b["zh"] for b in B if depth(full_tree(b))>=3]
+exec(open('library_v6.py',encoding='utf-8').read())

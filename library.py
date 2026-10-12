@@ -229,11 +229,11 @@ def filter_bar():
 LIB=f'''
 <section>
 <h2 id="sec-library">十二、书库：基督教古典教育核心书目</h2>
-<p class="lead">这是<span class="mark-core">广泛的核心书目</span>（不可能真正穷尽“全部”），每本书的作者、年份与存在都经网上检索核实，查不到的一律删去。共 <b class="counter" data-to="{N}">{N}</b> 本，每本书都显示 <b>📑 目录</b>：<b class="counter" data-to="{NV}">{NV}</b> 本为核对过的完整章节目录，其余为按公认卷册或部分划分的“结构目录”，不编造章名。目录以树状展开：来源中的真实标题用编号（1 / 1.1 / 1.1.1）显示，本站整理的内容用虚线框标“要点概括”，两者分开。<b class="counter" data-to="{NZH}">{NZH}</b> 本已有核实的中文版（标 🀄，含译者、出版方、年份）。</p>
+<p class="lead">这是<span class="mark-core">广泛的核心书目</span>（不可能真正穷尽“全部”），每本书的作者、年份与存在都经网上检索核实，查不到的一律删去。共 <b class="counter" data-to="{N}">{N}</b> 本，每本书一张整行卡片：书头（书名、原名、作者、年份、传统、中译版本），然后是<b>中心思想</b>、<b>目录</b>、<b>评论</b>（长处／警惕／用法）。目录方面：<b class="counter" data-to="{NFULL}">{NFULL}</b> 本为可查来源核对的完整章节目录（古代著作以作者原分卷次为章节层级）；<b>{NPART}</b> 本只核实到篇/部标题；<b>{NSINGLE}</b> 本原作本身无分章；<b>{NSUM}</b> 本查不到可核实的目录，只给出明确标注的“目录概要”。章名一律不编造；英文/荷文著作的中文章名为本站译，来源写在每个目录上方。<b class="counter" data-to="{NZH}">{NZH}</b> 本已有核实的中文版（标 🀄，含译者、出版方、年份）。</p>
 <div class="stat-row">
  <div class="stat"><b class="counter" data-to="{N}">{N}</b><span>本书</span></div>
  <div class="stat"><b class="counter" data-to="5">5</b><span>组别</span></div>
- <div class="stat"><b class="counter" data-to="{NV}">{NV}</b><span>完整章节目录</span></div>
+ <div class="stat"><b class="counter" data-to="{NFULL}">{NFULL}</b><span>完整章节目录</span></div>
  <div class="stat"><b class="counter" data-to="{NZH}">{NZH}</b><span>已有中译</span></div>
  <div class="stat"><b class="counter" data-to="2400">2400</b><span>年跨度（约）</span></div>
 </div>
