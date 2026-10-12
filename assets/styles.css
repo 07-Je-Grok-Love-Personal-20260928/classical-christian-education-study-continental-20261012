@@ -2998,3 +2998,4 @@ details.fold.ql-card summary {
 .wheel.rv .wh-n{opacity:0;transform:scale(.6);transform-box:fill-box;transform-origin:center;transition:opacity .5s,transform .5s;transition-delay:calc(var(--i)*120ms)}
 .wheel.rv.in .wh-n{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){.wheel .wh-n{opacity:1!important;transform:none!important}}
+.tq .flip-f,.tq .flip-b{flex-direction:column;text-align:center}
