@@ -2909,3 +2909,45 @@ details.fold.ql-card summary {
 .bk-back{color:#d4af37;text-decoration:none;font-weight:600;margin-right:1em;white-space:nowrap}
 .bk-back:hover{text-decoration:underline}
 .spine{-webkit-touch-callout:default;cursor:pointer}
+/* v9 Liberal Arts Tradition deep-dive */
+.lt-blur{background:rgba(224,122,95,.18);color:#f0a08a;border:1px dashed #e07a5f;border-radius:4px;padding:0 .3em;font-size:.85em;white-space:nowrap}
+.lt-inf{background:rgba(127,179,213,.15);color:#9cc7e6;border:1px dashed #7fb3d5;border-radius:4px;padding:0 .3em;font-size:.8em;white-space:nowrap}
+.lt-legend{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;font-size:.85rem;color:var(--text-muted,#a9b6c8);margin:.6rem 0}
+.lt-src{font-size:.82rem;color:#a9b6c8;border-top:1px dashed rgba(212,175,55,.25);padding-top:.4rem;margin-top:.6rem}
+.lt-q{border-left:3px solid #d4af37;padding:.3rem .8rem;color:#e8dcb5;font-style:italic;background:rgba(212,175,55,.06)}
+.lt-sub{background:rgba(94,196,192,.07);border-radius:8px;padding:.5rem .8rem}
+.lt-back,.bk-feat{margin:.4rem 0}.lt-back a,.bk-feat a{color:#f0d878;font-weight:600}
+.bk-feat{background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.35);border-radius:8px;padding:.45rem .7rem}
+.lt-toc{list-style:none;padding:0;margin:.8rem 0;border:1px solid var(--border);border-radius:12px;background:#111d30;overflow:hidden}
+.lt-toc li{padding:.45rem .8rem;border-bottom:1px solid rgba(255,255,255,.05);min-width:0}
+.lt-toc .lt-part{background:linear-gradient(90deg,rgba(212,175,55,.18),transparent);display:flex;flex-direction:column;padding:.7rem .8rem}
+.lt-part .lt-en{font-weight:700;color:#f0d878}.lt-part .lt-zh{font-weight:700}
+.lt-row{display:flex;gap:.8rem;align-items:baseline;justify-content:space-between}
+.lt-t{display:flex;flex-direction:column;min-width:0;overflow-wrap:anywhere}
+.lt-en{color:#c9d6e8;font-size:.92rem}.lt-zh{color:#f3ead2}
+.lt-pg{flex:none;font-variant-numeric:tabular-nums;color:#d4af37;font-weight:700;min-width:2.2em;text-align:right}
+.lt-l0 .lt-zh{font-weight:700}.lt-l1{padding-left:1.6rem!important}.lt-l2{padding-left:2.6rem!important}.lt-l3{padding-left:3.6rem!important}
+.lt-l2 .lt-en,.lt-l3 .lt-en{font-size:.86rem}
+.lt-note{display:block;color:#a9b6c8;font-size:.78rem;margin-top:.15rem}
+@media (max-width:520px){.lt-l1{padding-left:1rem!important}.lt-l2{padding-left:1.5rem!important}.lt-l3{padding-left:2rem!important}}
+.lt-fig{margin:1rem auto;max-width:620px}.lt-fig svg{width:100%;height:auto;display:block}
+.lt-fig figcaption{font-size:.85rem;color:#a9b6c8;margin-top:.5rem}
+.ltx{fill:#f3ead2;font-size:15px;text-anchor:middle;font-family:inherit}.lts{font-size:13px}.ltb{font-weight:700}.ltg{fill:#0e1a2c;font-size:17px}
+.ltf circle{fill:#7a2f2f;stroke:#f0d878;stroke-width:1.5}.ltf .ltgr{fill:#8a6d1f}
+.lt-stack{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:1rem 0}
+.lt-layer{display:flex;gap:.8rem;align-items:flex-start;border:1px solid var(--c);border-left:6px solid var(--c);border-radius:10px;padding:.6rem .8rem;background:#132037}
+.lt-k{flex:none;width:2rem;height:2rem;border-radius:50%;background:var(--c);color:#0e1a2c;font-weight:800;display:flex;align-items:center;justify-content:center}
+.lt-lb{display:flex;flex-direction:column;min-width:0}.lt-lb b{color:var(--c)}.lt-lb small{color:#a9b6c8}
+.lt-down{text-align:center;color:#d4af37;line-height:1.2;font-size:.8rem}
+.lt-srcl{font-size:.85rem;overflow-wrap:anywhere}.lt-note2{font-size:.82rem;color:#a9b6c8}
+.lt .table-wrap td{overflow-wrap:anywhere}
+.ltgt{fill:#f0d878;font-size:20px}
+.lt-fig .ltx{font-size:17px}.lt-fig .lts{font-size:15px}
+@media (max-width:640px){
+ .lt-tw{overflow:visible}.lt-tw table,.lt-tw tbody,.lt-tw tr,.lt-tw td{display:block;width:100%!important;min-width:0!important;max-width:100%!important}
+ .lt-tw thead{display:none}.lt-tw tr{border-bottom:1px solid rgba(212,175,55,.25);padding:.4rem 0}
+ .lt-tw td{border:0!important;padding:.25rem .6rem!important}
+ .lt-tw td::before{content:attr(data-l);display:block;font-size:.75rem;color:#d4af37;font-weight:700}
+ .lt-fig .ltx{font-size:20px}.lt-fig .lts{font-size:18px}
+}
+.lt-fig .lte{font-size:12px;fill:#a9c4e0}@media (max-width:640px){.lt-fig .lte{font-size:14px}}

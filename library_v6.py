@@ -208,7 +208,7 @@ def book_cards():
 <h4 class="book-title">《{b["zh"]}》</h4><p class="book-orig">{b["orig"]}</p>
 <p class="book-au">{b["au"]} <span class="stars" aria-label="难度{b["st"]}星">{stars(b["st"])}</span></p>
 <div class="bk-zh">{zb}</div></header>
-<div class="bk-sec bk-thesis"><h5>中心思想</h5><p>{b["core"]}</p></div>
+{('<p class="bk-feat"><a href="#sec-lat">★ 本书专题深读：中英目录、PGMAPT 树、逐章摘要、改革宗评估 →</a></p>') if b["zh"]=="博雅传统" else ""}<div class="bk-sec bk-thesis"><h5>中心思想</h5><p>{b["core"]}</p></div>
 {toc_html(b)}
 {comment_html(b)}
 <p class="bk-foot"><a class="bk-back" href="#sec-shelf">↑ 返回书架</a><span>推荐：{b["who"]}</span><span class="mem">记忆：{b["mem"]}</span></p>

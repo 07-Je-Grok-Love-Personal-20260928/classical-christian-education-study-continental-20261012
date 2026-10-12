@@ -175,4 +175,5 @@ S1 = f'''
 </section>
 '''
 exec(open('library.py',encoding='utf-8').read())
-BODY = S1 + LIB
+exec(open('lat.py',encoding='utf-8').read())
+BODY = S1 + LAT + LIB
