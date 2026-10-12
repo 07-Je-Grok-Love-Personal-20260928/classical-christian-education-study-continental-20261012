@@ -2901,3 +2901,11 @@ details.fold.ql-card summary {
 .bk-toc .tree{max-height:none;overflow:visible}
 .bk-foot .mem{background:none;border:none;box-shadow:none;padding:0;font-weight:400;font-size:.86rem;display:inline}
 .spine span{text-orientation:mixed}
+/* v7 shelf→card jump */
+.book{scroll-margin-top:84px}
+.book.bk-hl{animation:bkhl 2.4s ease-out}
+@keyframes bkhl{0%,30%{box-shadow:0 0 0 3px #d4af37,0 0 28px rgba(212,175,55,.55)}100%{box-shadow:none}}
+@media (prefers-reduced-motion:reduce){.book.bk-hl{animation:none;outline:3px solid #d4af37}}
+.bk-back{color:#d4af37;text-decoration:none;font-weight:600;margin-right:1em;white-space:nowrap}
+.bk-back:hover{text-decoration:underline}
+.spine{-webkit-touch-callout:default;cursor:pointer}

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# v20261012-6：补全真实章节目录、中心思想、评论（长处/警惕/用法），单列书卡。由 library_v5.py 末尾 exec。
+# v20261012-7：补全真实章节目录、中心思想、评论（长处/警惕/用法），单列书卡。由 library_v5.py 末尾 exec。
 # CAT: full=完整真实章节目录；part=真实标题但只到篇/部；single=原作单篇无分章（目录概要）；summary=未查到完整目录（目录概要）
 CAT={}; SRC={}
 def F(zh,nodes,src,cat="full"):
@@ -198,7 +198,7 @@ def book_cards():
 <div class="bk-sec bk-thesis"><h5>中心思想</h5><p>{b["core"]}</p></div>
 {toc_html(b)}
 {comment_html(b)}
-<p class="bk-foot"><span>推荐：{b["who"]}</span><span class="mem">记忆：{b["mem"]}</span></p>
+<p class="bk-foot"><a class="bk-back" href="#sec-shelf">↑ 返回书架</a><span>推荐：{b["who"]}</span><span class="mem">记忆：{b["mem"]}</span></p>
 </article>''')
     return "".join(out)
 
