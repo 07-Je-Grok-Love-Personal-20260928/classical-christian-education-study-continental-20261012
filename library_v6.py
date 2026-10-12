@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# v20261012-7：补全真实章节目录、中心思想、评论（长处/警惕/用法），单列书卡。由 library_v5.py 末尾 exec。
+# v20261012-8：补全真实章节目录、中心思想、评论（长处/警惕/用法），单列书卡。由 library_v5.py 末尾 exec。
 # CAT: full=完整真实章节目录；part=真实标题但只到篇/部；single=原作单篇无分章（目录概要）；summary=未查到完整目录（目录概要）
 CAT={}; SRC={}
 def F(zh,nodes,src,cat="full"):
@@ -171,6 +171,19 @@ def tree_html(nodes,pre="",lv=1):
     return "".join(out)
 
 CATLAB={"full":("完整章节目录","ok"),"part":("真实篇/部标题（章名未全）","part"),"single":("原作无分章 · 目录概要","single"),"summary":("目录概要（未查到完整目录）","sum")}
+
+import re as _re, unicodedata as _ud
+_BID={}
+def bid(b):
+    k=b["zh"]
+    if k in _BID: return _BID[k]
+    t=_ud.normalize("NFKD",b["orig"]).encode("ascii","ignore").decode().lower()
+    t=_re.sub(r"[^a-z0-9]+","-",t).strip("-")[:48].strip("-") or "x"
+    base="bk-"+t; i=base; n=2
+    while i in _BID.values(): i=f"{base}-{n}"; n+=1
+    _BID[k]=i; return i
+def oldid(b): return f"bk-{zlib.crc32(b['zh'].encode())%1000000}"
+
 def toc_html(b):
     tr=to_tree(b["zh"]); c=cat(b["zh"]); lab,cl=CATLAB[c]
     note=SRC.get(b["zh"]) or (SUMNOTE if c=="summary" else "")
@@ -190,7 +203,7 @@ def book_cards():
             zt,ztr,zpub,zyr,zn=ZH[b["zh"]]; zb=f'<span class="pill zh">🀄 中译：{zt} · {ztr} · {zpub} · {zyr}</span>'
         elif b["zh"] in WEBZH: zb=f'<span class="pill web">🌐 {WEBZH[b["zh"]]}</span>'
         else: zb='<span class="pill no">暂无中译（书名为本站译）</span>'
-        out.append(f'''<article class="book" id="bk-{zlib.crc32(b["zh"].encode())%1000000}" data-g="{b["g"]}" data-a="{b["a"]}" data-zh="{zz}" data-t="{t}" data-s="{s}" style="--c:{gc}">
+        out.append(f'''<article class="book" id="{bid(b)}" data-old="{oldid(b)}" data-g="{b["g"]}" data-a="{b["a"]}" data-zh="{zz}" data-t="{t}" data-s="{s}" style="--c:{gc}">
 <header class="bk-head"><div class="bk-meta"><span class="pill grp">{gname}</span><span class="pill trad" style="--tc:{tc}">{tn}</span><span class="pill yr">{b["ys"]}</span></div>
 <h4 class="book-title">《{b["zh"]}》</h4><p class="book-orig">{b["orig"]}</p>
 <p class="book-au">{b["au"]} <span class="stars" aria-label="难度{b["st"]}星">{stars(b["st"])}</span></p>
@@ -207,7 +220,7 @@ def shelf():
     for b in sorted(B,key=lambda x:x["y"]):
         n=len(b["zh"]); h=max(120,46+n*17)
         yr=str(b["y"]).replace("-","前")
-        sp+=f'<a class="spine{" zh" if b["zh"] in ZH else ""}" href="#bk-{zlib.crc32(b["zh"].encode())%1000000}" style="--c:{G[b["g"]][1]};--h:{h}px" title="《{b["zh"]}》{b["au"].split(" ")[0]} · {b["ys"]}" aria-label="《{b["zh"]}》，{b["ys"]}"><span>{b["zh"]}</span><em>{yr}</em></a>'
+        sp+=f'<a class="spine{" zh" if b["zh"] in ZH else ""}" href="#{bid(b)}" style="--c:{G[b["g"]][1]};--h:{h}px" title="《{b["zh"]}》{b["au"].split(" ")[0]} · {b["ys"]}" aria-label="《{b["zh"]}》，{b["ys"]}"><span>{b["zh"]}</span><em>{yr}</em></a>'
     leg="".join(f'<span class="lg"><i style="--c:{c}"></i>{n}</span>' for n,c in G.values())
     return f'<div class="shelf" role="list">{sp}</div><div class="shelf-leg">{leg}<span class="lg"><i class="zhm"></i>金顶 = 已有中译</span></div><p class="viz-note">书脊按年代排列，可左右滑动；书名完整竖排，悬停或长按可见作者与年份；点击跳到该书卡片。</p>'
 

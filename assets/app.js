@@ -390,7 +390,7 @@
 
   /* —— Hash on load —— */
   function scrollToHash() {
-    if (location.hash) {
+    if (location.hash && !/^#bk-/.test(location.hash)) {
       const el = document.getElementById(location.hash.slice(1));
       if (el) setTimeout(() => el.scrollIntoView({ behavior: scrollBehavior() }), 120);
     }
