@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """生成 index.html。改内容改这里，然后 python3 build.py。"""
-V = "cce20261012"
+V = "cce20261012-2"
 
 ERAS = [
  dict(id="era-hebrew", c="#3d9a6a", ico="📜", when="约前15–前5世纪（传统）", name="希伯来：家中的施玛", hook="敬畏耶和华是知识的开端——教育从家门口开始。",
@@ -129,7 +129,7 @@ ERAS = [
 def era_rail():
     out=[]
     for e in ERAS:
-        out.append(f'<div class="era-chip" style="--c:{e["c"]}"><a href="#{e["id"]}"><span class="era-ico" aria-hidden="true">{e["ico"]}</span><span class="era-when">{e["when"]}</span><span class="era-name">{e["name"]}</span><p class="era-hook">{e["hook"]}</p></a></div>')
+        out.append(f'<div class="era-chip" style="--c:{e["c"]}"><div><span class="era-ico" aria-hidden="true">{e["ico"]}</span><span class="era-when">{e["when"]}</span><span class="era-name">{e["name"]}</span><p class="era-hook">{e["hook"]}</p></div></div>')
     return '<div class="era-rail">'+"".join(out)+'</div>'
 
 def era_sections():
@@ -194,6 +194,8 @@ GEO=[("耶路撒冷","#3d9a6a","圣约之城；家庭与会堂诵读律法；口
 def geo_cards():
     return '<div class="card-grid">'+"".join(f'<div class="card" style="border-top:3px solid {c}"><h4 style="color:{c}">📍 {n}</h4><p class="mb-0">{t}</p></div>' for n,c,t in GEO)+'</div>'
 
+exec(open('sections.py',encoding='utf-8').read())
+
 HTML=f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -227,139 +229,18 @@ HTML=f'''<!DOCTYPE html>
   <p class="hero-brand-line">敬畏耶和华是知识的开端；拿埃及的金子，不造金牛犊。</p>
   <p class="lead">古典教育是一套工具（语言、逻辑、表达、数与秩序）与一份书单（两千多年的经典）。它本身<span class="mark-warn">不是福音</span>。改革宗的问题只有一个：这些工具与书怎样被放在<span class="mark-core">基督的主权</span>与<span class="mark-christ">恩典之约</span>之下，用来养育约中的孩子。</p>
   <div class="hero-meta">
-    <a class="chip chip-green" href="#sec-frame">圣经整体</a><a class="chip chip-gold" href="#sec-timeline">时代线</a>
-    <a class="chip chip-teal" href="#sec-geo">地图</a><a class="chip chip-purple" href="#sec-arts">三艺四艺</a>
+    <a class="chip chip-green" href="#sec-def">本质</a><a class="chip chip-gold" href="#sec-methods">方法</a>
+    <a class="chip chip-teal" href="#sec-curriculum">课程</a><a class="chip chip-purple" href="#sec-trivium">三艺四艺</a>
     <a class="chip chip-rose" href="#sec-hard">难点</a><a class="chip chip-blue" href="#sec-memory">记忆路径</a>
   </div>
   <div class="mark-legend"><span><span class="mark-core">核心</span></span><span><span class="mark-christ">基督/圣约</span></span><span><span class="mark-warn">警示/难点</span></span><span><span class="mark-creed">信条</span></span></div>
 </section>
 
-<section id="sec-frame-wrap">
-<h2 id="sec-frame">一、先看整本圣经：教育在救赎历史中的位置</h2>
-<div class="flow">
- <div class="step">🌍 创造<br><small>按神形像造人，受托治理（创1:26–28）</small></div><span class="arr">→</span>
- <div class="step">🌑 堕落<br><small>心思昏暗（罗1:21；弗4:18）</small></div><span class="arr">→</span>
- <div class="step">✝️ 救赎<br><small>心意更新（罗12:2；西3:10）</small></div><span class="arr">→</span>
- <div class="step">👑 成全<br><small>万有在基督里同归于一（弗1:10）</small></div>
-</div>
-<div class="card-grid">
- <div class="card card-gold"><span class="card-tag">创造</span><h4>为什么人要学习？</h4><p>文化使命（创1:28）要求人认识、命名、治理受造界。亚当给动物起名（创2:19–20）就是第一堂‘文法课’：语言对应实在。学习不是堕落后的补救，而是神形像的本分。</p></div>
- <div class="card"><span class="card-tag">堕落</span><h4>为什么学习会走偏？</h4><p>罪没有消灭理性，却使理性背离神（罗1:21–22）。人仍能算对数学，却不肯把荣耀归给定下数学秩序的神。因此<span class="mark-warn">知识多不等于智慧</span>。</p></div>
- <div class="card"><span class="card-tag">救赎</span><h4>恩典如何改变学习？</h4><p>新人在知识上渐渐更新（西3:10）；将人所有的心意夺回，使它都顺服基督（林后10:5）。教育不能重生人，但重生的人需要被教育。</p></div>
- <div class="card"><span class="card-tag">基督</span><h4>一切学科的中心</h4><p>万有靠祂造、靠祂而立（西1:16–17）；一切智慧知识的宝藏都藏在祂里面（西2:3）。所以没有‘中立科目’。</p></div>
- <div class="card"><span class="card-tag">智慧文学</span><h4>敬畏是开端</h4><p>箴1:7：敬畏耶和华是知识的开端。‘开端’既是起点也是首要原则：不是学到最后才加上信仰，而是信仰决定怎样学。</p></div>
- <div class="card"><span class="card-tag">两本书</span><h4>受造界与圣经</h4><p>比利时信条第2条：神借受造界（如一本好书）与圣经使人认识祂。四艺读第一本书，三艺帮助读第二本书；第二本书校正对第一本书的读法。</p></div>
-</div>
-
-<h3 id="sec-covenant">圣约神学：为什么教育是约的义务</h3>
-<div class="mindgrid">
- <div class="mind-root">🤝 恩典之约：我要作你和你后裔的神（创17:7）</div>
- <div class="mind-branch" style="--c:#3d9a6a"><h4>儿女在约中</h4><ul><li>创17：割礼给婴孩</li><li>徒2:39：应许归给你们和你们的儿女</li><li>海德堡问答74：婴孩当受洗</li></ul></div>
- <div class="mind-branch" style="--c:#d4af37"><h4>父母的誓约</h4><ul><li>改革宗洗礼仪式：父母承诺按所信教义竭力教养孩子</li><li>弗6:4：照主的教训和警戒</li><li>教育是还愿，不是消费选择</li></ul></div>
- <div class="mind-branch" style="--c:#c45c5c"><h4>教会的看顾</h4><ul><li>多特会议：家庭、学校、教会三种教理问答</li><li>教会规章要求设好的学校教师</li><li>海德堡问答103：维持传道与学校</li></ul></div>
- <div class="mind-branch" style="--c:#6ba3e0"><h4>养育的目标</h4><ul><li>海德堡第1主日：唯一的安慰</li><li>第33主日：旧人治死、新人复活</li><li>不是造‘精英’，是造门徒</li></ul></div>
-</div>
-
-<h3 id="sec-grace">普遍恩典与对立：为什么能读异教经典</h3>
-<div class="table-wrap"><table><thead><tr><th>概念</th><th>意思</th><th>对古典教育的意义</th></tr></thead><tbody>
-<tr><td><span class="mark-core">普遍恩典</span></td><td>神约束罪，使非信徒也能发现真实的东西（太5:45）</td><td>欧几里得的几何、亚里士多德的逻辑是真实发现，可以使用</td></tr>
-<tr><td><span class="mark-warn">对立（antithesis）</span></td><td>信与不信在根本方向上相反（创3:15；林后6:14–15）</td><td>不能把柏拉图的人观、斯多亚的命运观连同工具一起接收</td></tr>
-<tr><td><span class="mark-creed">残存自然之光</span></td><td>比利时14；多特三四4：有残光，但不足以得救，且被人压制</td><td>古典德性可作镜子，不能作救主</td></tr>
-<tr><td><span class="mark-christ">更新</span></td><td>海德堡第33主日；罗12:2</td><td>教育的终点是心意更新后的服事，而非自我完善</td></tr>
-</tbody></table></div>
-<p>三大普世信经本身就是古典教育的成果与教材：<span class="mark-creed">使徒信经</span>是受洗的信仰纲要，<span class="mark-creed">尼西亚信经</span>用希腊词（本质、位格）护卫圣经，<span class="mark-creed">亚他那修信经</span>是精确定义的范本。会背信经，就是在练习‘文法’；会解释信经，就是在练习‘逻辑’与‘修辞’。</p>
-</section>
-
-<section>
-<h2 id="sec-timeline">二、时代线：一张色卡记住两千五百年</h2>
-<p>只用公认锚点，<span class="mark-warn">“约”字表示大约年代</span>。点任一色卡跳到详解。</p>
-{era_rail()}
-<div class="table-wrap"><table><thead><tr><th>必记数字</th><th>事件</th><th>挂钩</th></tr></thead><tbody>
-<tr><td>约前387</td><td>柏拉图学园</td><td>学院（academy）一词的来源</td></tr>
-<tr><td>约396–426</td><td>奥古斯丁《论基督教教义》</td><td>埃及人的金子</td></tr>
-<tr><td>约800</td><td>查理曼加冕、阿尔昆办学</td><td>整数年好记</td></tr>
-<tr><td>1524</td><td>路德致议员书</td><td>九十五条后七年</td></tr>
-<tr><td>1559</td><td>日内瓦学院</td><td>加尔文晚年最后的建设之一</td></tr>
-<tr><td>1563</td><td>海德堡要理问答</td><td>学院后四年</td></tr>
-<tr><td>1618–19</td><td>多特会议</td><td>三种教理问答</td></tr>
-<tr><td>1880</td><td>自由大学</td><td>领域主权</td></tr>
-<tr><td>1947</td><td>塞耶斯演讲</td><td>失落的工具</td></tr>
-<tr><td>1991</td><td>威尔逊著作</td><td>运动起点</td></tr>
-</tbody></table></div>
-</section>
-
-<section>
-<h2 id="sec-geo">三、地理：从耶路撒冷到阿姆斯特丹</h2>
-{map_svg()}
-<h3 id="sec-geo-culture">各地文化区域特征</h3>
-{geo_cards()}
-</section>
-
-<section>
-<h2 id="sec-story">四、故事线：四幕剧</h2>
-<div class="story-list">
- <div class="story-card s-promise"><span class="story-num">1</span><h3>家门口的约</h3><p>神把律法交给父亲们，教育是约的传承。</p></div>
- <div class="story-card"><span class="story-num">2</span><h3>异教的工具箱</h3><p>希腊罗马发明了逻辑、修辞与七艺，却没有十字架。</p></div>
- <div class="story-card s-christ"><span class="story-num">3</span><h3>教会接过工具</h3><p>奥古斯丁到中世纪大学：工具被带进教会，有时也带进了偶像。</p></div>
- <div class="story-card s-end"><span class="story-num">4</span><h3>改教与再出发</h3><p>回到圣经，要理问答为心，古典为器；荷兰与现代运动各自延续。</p></div>
-</div>
-</section>
-
-<section>
-<h2 id="sec-arts">五、七艺：三艺与四艺</h2>
-<div class="table-wrap"><table><thead><tr><th>三艺 trivium</th><th>对象</th><th>古代意义</th><th>改革宗用途</th></tr></thead><tbody>
-<tr><td>📝 文法 grammatica</td><td>语言</td><td>读懂文本、正确用词，含文学阅读</td><td>读懂圣经与信条；尊重神所赐语言</td></tr>
-<tr><td>🧩 逻辑 dialectica</td><td>推理</td><td>定义、分类、三段论、辨谬</td><td>分辨真理与异端（约一4:1）</td></tr>
-<tr><td>🎤 修辞 rhetorica</td><td>说服</td><td>按场合、听众说服人</td><td>用爱心说诚实话（弗4:15）；讲道与护教</td></tr>
-</tbody></table></div>
-<div class="table-wrap"><table><thead><tr><th>四艺 quadrivium</th><th>对象</th><th>古代意义</th><th>改革宗用途</th></tr></thead><tbody>
-<tr><td>🔢 算术</td><td>数本身</td><td>数的性质</td><td>神是有秩序的神（林前14:33）</td></tr>
-<tr><td>📐 几何</td><td>空间中的数</td><td>欧几里得式证明</td><td>受造界的稳定可知</td></tr>
-<tr><td>🎵 音乐</td><td>时间中的数</td><td>比例与和谐，非仅演奏</td><td>诗篇歌唱；日内瓦诗篇</td></tr>
-<tr><td>🌌 天文</td><td>时空中的数</td><td>天体运行与历法</td><td>诸天述说神的荣耀（诗19:1）</td></tr>
-</tbody></table></div>
-<div class="warn-box"><b>⚠️ 难点：塞耶斯阶段对应</b><p class="mb-0">文法期（约小学）、逻辑期（约初中）、修辞期（约高中）是1947年塞耶斯的现代改编。古代与中世纪的三艺是学科，不是儿童发展阶段。可以当教学经验参考，<span class="mark-warn">不能当作圣经或古代传统</span>。</p></div>
-</section>
-
-<section>
-<h2 id="sec-eras">六、逐时代详解</h2>
-<p>每个时代都按：前因 → 真实背景 → 核心 → 为什么 → 做了什么 → 圣经与圣约 → 信条对照 → 难点 → 应用 → 记忆句。</p>
-{era_sections()}
-</section>
-
-<section>
-<h2 id="sec-hard">七、四大难点（务必分清）</h2>
-<div class="card-grid">
- <div class="warn-box"><b>① 古典 ≠ 自动基督教</b><p class="mb-0">西塞罗与柏拉图的学校也是古典的。决定一所学校是否基督教的，是它教导的神观与人观，不是拉丁文课。</p></div>
- <div class="warn-box"><b>② 希腊德性 vs 恩典</b><p class="mb-0">德性靠习惯与理性养成；圣洁由圣灵借道更新（海德堡第33主日）。古典品格教育若取代称义与成圣，就是新律法主义。</p></div>
- <div class="warn-box"><b>③ 塞耶斯阶段是教法</b><p class="mb-0">有用，但不是经文，也不是古代。</p></div>
- <div class="warn-box"><b>④ 教育不能重生人</b><p class="mb-0">多特第三四项第4条：自然之光不足；重生是圣灵的主权工作（约3:5–8）。教育是蒙恩之约中的养育，不是救恩的手段。</p></div>
-</div>
-</section>
-
-<section>
-<h2 id="sec-angles">八、不同视角</h2>
-<div class="facet">
- <div class="f-app"><b>👨‍👩‍👧 父母</b><p>我是第一位教师（申6；多特）。我的洗礼誓约要求我关心孩子学什么、由谁教。古典课程是工具，家中的敬拜与教理才是根。</p></div>
- <div class="f-why"><b>🧑‍🏫 教师</b><p>我在家长委托的领域工作（领域主权）。每一门课：真理在哪？神的荣耀在哪？罪如何扭曲这门学问？</p></div>
- <div class="f-creed"><b>⛪ 牧师</b><p>教会不办一切，但必须牧养：主日教理讲道、教理班、看顾教师与家长。不让‘古典’成为新的身份骄傲。</p></div>
- <div class="f-did"><b>🎒 学生</b><p>学拉丁文、逻辑、几何，是为了读得懂、想得清、说得真，最终爱神爱人。我不是因成绩被称义的。</p></div>
-</div>
-</section>
-
-<section>
-<h2 id="sec-memory">九、记忆路径：一句一时代</h2>
-<div class="flow">
-<div class="step">📜 施玛在家</div><span class="arr">→</span><div class="step">🏛️ 希腊问德</div><span class="arr">→</span><div class="step">🗣️ 罗马善言</div><span class="arr">→</span>
-<div class="step">✝️ 奥古斯丁拿金子</div><span class="arr">→</span><div class="step">👑 查理曼办学</div><span class="arr">→</span><div class="step">🎓 大学女王</div><span class="arr">→</span>
-<div class="step">📖 回到源头</div><span class="arr">→</span><div class="step">🔥 1524·1559·1563·1618</div><span class="arr">→</span><div class="step">🌷 一寸不让</div><span class="arr">→</span><div class="step">🧰 失落的工具</div>
-</div>
-<p class="mem">🧠 总纲：敬畏为根，圣约为家，三艺为器，基督为王。</p>
-</section>
+{BODY}
 
 <footer class="site-footer">
   <div class="footer-brand">欧陆改革宗 · 基督教古典教育研读</div>
-  <div class="footer-sub">v20261012</div>
+  <div class="footer-sub">v20261012-2</div>
   <p>讲解为原作。经文只标章节，信条只标条款号。约数年代已标“约”。地图为示意。</p>
   <p class="mb-0">Soli Deo Gloria.</p>
 </footer>

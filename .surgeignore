@@ -7,3 +7,4 @@ node_modules
 CNAME
 build.py
 README.md
+sections.py
